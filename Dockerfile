@@ -26,7 +26,7 @@ RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     bzip2 \
     dialog \
     openssl \
-    openldap \
+    slapd \
     rsync \
     python-pygments \
     python-ldap \
