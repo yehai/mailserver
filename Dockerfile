@@ -5,14 +5,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
   && echo "APT::Install-Suggests 0;" >> /etc/apt/apt.conf.d/01norecommends
 
-ENV IREDMAIL_VERSION 0.9.2
+ENV IREDMAIL_VERSION 0.9.0
 
 # TODO: Replace hostname
 ENV HOSTNAME mx.phoneyou.net
 ENV DOCKER_LDAP_DN dc=phoneyou,dc=net
 
 # Local sources (for speed-up)
-COPY ./sources.list.163 /etc/apt/sources.list
+COPY ./sources.list.ru /etc/apt/sources.list
 # Install some necessary packages
 RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     /etc/apt/sources.list.d/00-inverse-ca.list \
@@ -27,7 +27,6 @@ RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     dialog \
     openssl \
     rsync \
-    python-pygments \
     rsyslog \
     dovecot-core \
     dovecot-imapd \
@@ -45,7 +44,7 @@ RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
 WORKDIR /opt/iredmail
 
 # Copy files, extract iRedMail, remove archive, copy & configure tools
-COPY ./files ./  
+COPY ./files ./
 
 RUN wget -O - --no-check-certificate \
     https://bitbucket.org/zhb/iredmail/downloads/iRedMail-"${IREDMAIL_VERSION}".tar.bz2 | \
@@ -116,8 +115,7 @@ RUN rm -rf /etc/ldap/slapd.d \
 
 # TODO: Replace ldap password (LDAP_ROOTPW)
 # Copy initial ldif and add all ldifs to ldap
-#RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
-RUN mkdir ldifs && touch ldifs/00_ldap_init.ldif \
+RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
   && service slapd start \
   && for f in ldifs/*.ldif; \
   do \
@@ -137,11 +135,11 @@ RUN (crontab -l 2>/dev/null; \
   crontab -
 
 # Force users to change passwords
-	RUN echo "plugins.append('ldap_force_change_password_in_days')" \
-	    >> /opt/iredapd/settings.py \
-	  && echo "CHANGE_PASSWORD_DAYS = 365" >> /opt/iredapd/settings.py \
-	  && echo "CHANGE_PASSWORD_MESSAGE = 'Please change your password in webmail: https://$HOSTNAME/mail/'" \
-	    >> /opt/iredapd/settings.py
+RUN echo "plugins.append('ldap_force_change_password_in_days')" \
+    >> /opt/iredapd/settings.py \
+  && echo "CHANGE_PASSWORD_DAYS = 365" >> /opt/iredapd/settings.py \
+  && echo "CHANGE_PASSWORD_MESSAGE = 'Please change your password in webmail: https://$HOSTNAME/mail/'" \
+    >> /opt/iredapd/settings.py
 
 WORKDIR /opt
 
