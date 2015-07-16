@@ -5,14 +5,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
   && echo "APT::Install-Suggests 0;" >> /etc/apt/apt.conf.d/01norecommends
 
-ENV IREDMAIL_VERSION 0.9.0
+ENV IREDMAIL_VERSION 0.9.2
 
 # TODO: Replace hostname
 ENV HOSTNAME mx.phoneyou.net
 ENV DOCKER_LDAP_DN dc=phoneyou,dc=net
 
 # Local sources (for speed-up)
-COPY ./sources.list.ru /etc/apt/sources.list
+COPY ./sources.list.163 /etc/apt/sources.list
 # Install some necessary packages
 RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     /etc/apt/sources.list.d/00-inverse-ca.list \
@@ -27,6 +27,7 @@ RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     dialog \
     openssl \
     rsync \
+    slapd \ 
     python-pygments \
     rsyslog \
     dovecot-core \
