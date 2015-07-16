@@ -1,0 +1,13 @@
+#!/bin/bash
+case "$*" in
+'-a'|'-A'|'-s')
+  echo "mx";;
+'-d')
+  echo "phoneyou.net";;
+'-f'|'--fqdn'|'--long'|'-v')
+  echo "mx.phoneyou.net";;
+'-i')
+  echo "127.0.0.1";;
+*)
+  /bin/hostname_ $* | sed 's/'"$(/bin/hostname_)"'/mx.phoneyou.net/g';;
+esac
