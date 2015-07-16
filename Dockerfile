@@ -27,7 +27,6 @@ RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     dialog \
     openssl \
     rsync \
-    slapd \ 
     python-pygments \
     rsyslog \
     dovecot-core \
@@ -117,7 +116,8 @@ RUN rm -rf /etc/ldap/slapd.d \
 
 # TODO: Replace ldap password (LDAP_ROOTPW)
 # Copy initial ldif and add all ldifs to ldap
-RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
+#RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
+RUN mkdir ldifs && touch ldifs/00_ldap_init.ldif \
   && service slapd start \
   && for f in ldifs/*.ldif; \
   do \
@@ -137,11 +137,11 @@ RUN (crontab -l 2>/dev/null; \
   crontab -
 
 # Force users to change passwords
-RUN echo "plugins.append('ldap_force_change_password_in_days')" \
-    >> /opt/iredapd/settings.py \
-  && echo "CHANGE_PASSWORD_DAYS = 365" >> /opt/iredapd/settings.py \
-  && echo "CHANGE_PASSWORD_MESSAGE = 'Please change your password in webmail: https://$HOSTNAME/mail/'" \
-    >> /opt/iredapd/settings.py
+	RUN echo "plugins.append('ldap_force_change_password_in_days')" \
+	    >> /opt/iredapd/settings.py \
+	  && echo "CHANGE_PASSWORD_DAYS = 365" >> /opt/iredapd/settings.py \
+	  && echo "CHANGE_PASSWORD_MESSAGE = 'Please change your password in webmail: https://$HOSTNAME/mail/'" \
+	    >> /opt/iredapd/settings.py
 
 WORKDIR /opt
 
