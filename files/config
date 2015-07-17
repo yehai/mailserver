@@ -25,7 +25,7 @@ export LDAP_BASEDN_NAME="domains"
 export LDAP_BASEDN="o=domains,dc=phoneyou,dc=net"
 export LDAP_ADMIN_BASEDN="o=domainAdmins,dc=phoneyou,dc=net"
 export LDAP_ROOTPW='phoneyou$ldap'
-export MYSQL_ROOT_PASSWD='phoneyou$db'
+export MYSQL_ROOT_PASSWD='phoneyou_db'
 export MYSQL_ROOT_USER='root'
 export SQL_SERVER='127.0.0.1'
 export SQL_SERVER_PORT='3306'
