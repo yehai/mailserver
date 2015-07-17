@@ -12,7 +12,7 @@ ENV HOSTNAME mx.phoneyou.net
 ENV DOCKER_LDAP_DN dc=phoneyou,dc=net
 
 # Local sources (for speed-up)
-COPY ./sources.list.ru /etc/apt/sources.list
+#COPY ./sources.list.ru /etc/apt/sources.list
 # Install some necessary packages
 RUN echo 'deb http://inverse.ca/debian wheezy wheezy' > \
     /etc/apt/sources.list.d/00-inverse-ca.list \
