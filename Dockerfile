@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
   && echo "APT::Install-Suggests 0;" >> /etc/apt/apt.conf.d/01norecommends
 
-ENV IREDMAIL_VERSION 0.9.0
+ENV IREDMAIL_VERSION 0.9.2
 
 # TODO: Replace hostname
 ENV HOSTNAME mx.phoneyou.net
