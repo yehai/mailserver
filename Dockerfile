@@ -115,13 +115,13 @@ RUN rm -rf /etc/ldap/slapd.d \
 
 # TODO: Replace ldap password (LDAP_ROOTPW)
 # Copy initial ldif and add all ldifs to ldap
-RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
-  && service slapd start \
-  && for f in ldifs/*.ldif; \
-  do \
-    ( ldapadd -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyou\$ldap -f "$f" || \
-    ldapmodify -v -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyou\$ldap -f "$f" ); \
-  done
+#RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
+#  && service slapd start \
+#  && for f in ldifs/*.ldif; \
+#  do \
+#    ( ldapadd -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyou\$ldap -f "$f" || \
+#    ldapmodify -v -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyou\$ldap -f "$f" ); \
+#  done
 
 # Encrypy iRedMail.tips
 # TODO: Replace tips password (random)
