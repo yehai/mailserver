@@ -154,10 +154,14 @@ RUN rm -rf /opt/iredmail /root/.bash_history \
 # Dovecot: 110/tcp, 143/tcp, 993/tcp, 995/tcp OpenLDAP: 389/tcp, 636/tcp
 EXPOSE 80 443 25 587 110 143 993 995 389 636
 
-
 VOLUME ["/var/log"]
 VOLUME ["/var/lib/mysql"]
 VOLUME ["/var/vmail"]
 
+RUN chown vmail:vmail /var/vmail \
+    && chmod 755 /var/vmail \
+    && chown mysql:mysql /var/lib/mysql \
+    && chmod 755 /var/lib/mysql
+    
 # Start all services
 CMD ["/sbin/init","2"]
