@@ -155,8 +155,6 @@ RUN rm -rf /opt/iredmail /root/.bash_history \
 EXPOSE 80 443 25 587 110 143 993 995 389 636
 
 
-RUN mkdir -p /var/vmail
-
 VOLUME ["/var/log"]
 VOLUME ["/var/lib/mysql"]
 VOLUME ["/var/vmail"]
