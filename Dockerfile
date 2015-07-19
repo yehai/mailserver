@@ -8,7 +8,7 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
 ENV IREDMAIL_VERSION 0.9.2
 
 # TODO: Replace hostname
-ENV HOSTNAME mx.phoneyou.net
+ENV HOSTNAME mx
 ENV DOCKER_LDAP_DN dc=phoneyou,dc=net
 
 # Local sources (for speed-up)
@@ -115,13 +115,16 @@ RUN rm -rf /etc/ldap/slapd.d \
 
 # TODO: Replace ldap password (LDAP_ROOTPW)
 # Copy initial ldif and add all ldifs to ldap
-RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
-  && service slapd start \
-  && for f in ldifs/*.ldif; \
-  do \
-    ( ldapadd -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" || \
-    ldapmodify -v -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" ); \
-  done
+RUN service slapd start
+#RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
+#  && service slapd start \
+#  && for f in ldifs/*.ldif; \
+#  do \
+#    ( ldapadd -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" || \
+#    ldapmodify -v -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" ); \
+#  done
+
+RUN a2enmod proxy && a2enmod headers
 
 # Encrypy iRedMail.tips
 # TODO: Replace tips password (random)
