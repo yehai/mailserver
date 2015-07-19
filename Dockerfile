@@ -144,7 +144,7 @@ RUN echo "plugins.append('ldap_force_change_password_in_days')" \
 WORKDIR /opt
 
 # Remove distr, return `uname` and `hostname`
-RUN rm -rf /opt/iredmail /root/.bash_history \
+RUN rm -rf /root/.bash_history \
   && rm -f /bin/uname /bin/hostname \
   && mv /bin/uname_ /bin/uname \
   && mv /bin/hostname_ /bin/hostname 
