@@ -8,7 +8,7 @@ RUN echo "APT::Install-Recommends 0;" >> /etc/apt/apt.conf.d/01norecommends \
 ENV IREDMAIL_VERSION 0.9.2
 
 # TODO: Replace hostname
-ENV HOSTNAME mx
+ENV HOSTNAME mx.phoneyou.net
 ENV DOCKER_LDAP_DN dc=phoneyou,dc=net
 
 # Local sources (for speed-up)
@@ -55,7 +55,7 @@ RUN wget -O - --no-check-certificate \
   && cp ./tools/* /opt/itools \
   && mkdir -p /var/vmail/backup \
   && mv ./backup.sh /var/vmail/backup \
-  && sed -i 's/dc=phoneyou,dc=net/'"$DOCKER_LDAP_DN"'/' \
+  && sed -i 's/dc=example,dc=com/'"$DOCKER_LDAP_DN"'/' \
     /opt/itools/create_mail_user_OpenLDAP.py
 
 # Fake `uname` and `hostname`
@@ -128,9 +128,9 @@ RUN a2enmod proxy && a2enmod headers
 
 # Encrypy iRedMail.tips
 # TODO: Replace tips password (random)
-RUN echo 'YWYxNWY5NTMwZjVmNmNhOTNmZDY1Zj' | \
-    openssl enc -in /opt/iredmail/iRedMail.tips -out /opt/iRedMail.tips.enc \
-    -e -aes256 -pass stdin
+#RUN echo 'YWYxNWY5NTMwZjVmNmNhOTNmZDY1Zj' | \
+#    openssl enc -in /opt/iredmail/iRedMail.tips -out /opt/iRedMail.tips.enc \
+#    -e -aes256 -pass stdin
 
 # Schedule backup script
 RUN (crontab -l 2>/dev/null; \
