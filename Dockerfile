@@ -161,10 +161,10 @@ VOLUME ["/var/log"]
 VOLUME ["/var/lib/mysql"]
 VOLUME ["/var/vmail"]
 
-RUN chown vmail:vmail /var/vmail \
-    && chmod 755 /var/vmail \
-    && chown mysql:mysql /var/lib/mysql \
-    && chmod 755 /var/lib/mysql
+#RUN chown vmail:vmail /var/vmail \
+#    && chmod 755 /var/vmail \
+#    && chown mysql:mysql /var/lib/mysql \
+#    && chmod 755 /var/lib/mysql
     
 # Start all services
 CMD ["/sbin/init","2"]
