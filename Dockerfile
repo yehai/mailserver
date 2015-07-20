@@ -115,22 +115,21 @@ RUN rm -rf /etc/ldap/slapd.d \
 
 # TODO: Replace ldap password (LDAP_ROOTPW)
 # Copy initial ldif and add all ldifs to ldap
-RUN service slapd start
-#RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
-#  && service slapd start \
-#  && for f in ldifs/*.ldif; \
-#  do \
-#    ( ldapadd -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" || \
-#    ldapmodify -v -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" ); \
-#  done
+RUN cp /opt/iredmail/conf/ldap_init.ldif ldifs/00_ldap_init.ldif \
+  && service slapd start \
+  && for f in ldifs/*.ldif; \
+  do \
+    ( ldapadd -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" || \
+    ldapmodify -v -D 'cn=Manager,'"$DOCKER_LDAP_DN" -w phoneyouldap -f "$f" ); \
+  done
 
 RUN a2enmod proxy && a2enmod headers
 
 # Encrypy iRedMail.tips
 # TODO: Replace tips password (random)
-#RUN echo 'YWYxNWY5NTMwZjVmNmNhOTNmZDY1Zj' | \
-#    openssl enc -in /opt/iredmail/iRedMail.tips -out /opt/iRedMail.tips.enc \
-#    -e -aes256 -pass stdin
+RUN echo 'YWYxNWY5NTMwZjVmNmNhOTNmZDY1Zj' | \
+    openssl enc -in /opt/iredmail/iRedMail.tips -out /opt/iRedMail.tips.enc \
+    -e -aes256 -pass stdin
 
 # Schedule backup script
 RUN (crontab -l 2>/dev/null; \
